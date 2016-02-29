@@ -18,8 +18,8 @@ class LegalDetails
     /**
      * @Id
      * @OneToOne(targetEntity="Organization")
+     * @JoinTable(name="organization")
      * @JoinColumn(name="party_id", referencedColumnName="party_id")
-     * @GeneratedValue
      */
 	protected $_partyId;
 

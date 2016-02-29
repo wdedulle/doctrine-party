@@ -23,11 +23,14 @@ $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src"), $i
 
 // database configuration parameters
 $connectionParams = array(
-    'dbname' => 'onecrm',
-    'user' => 'cqService',
-    'password' => 'cqService',
-    'host' => 'localhost',
-    'driver' => 'pdo_mysql',
+    'url' => 'sqlite:///:memory:',
 );
 // obtaining the entity manager
 $entityManager = EntityManager::create($connectionParams, $config);
+
+//lets create tables
+$queries = explode(";", file_get_contents( __DIR__."/src/sql/create.sql" ));
+
+foreach ( $queries as $query ) {
+	$entityManager->getConnection()->prepare($query)->execute();
+}
